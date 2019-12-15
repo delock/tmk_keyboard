@@ -24,6 +24,7 @@ enum macro_id {
 };
 
 #define AC_ESC_L1  ACTION_LAYER_TAP_KEY(1, KC_ESC)
+#define AC_SPC_L1  ACTION_LAYER_TAP_KEY(1, KC_SPC)
 #define AC_SCR1    ACTION_MACRO(SCREEN_1)
 #define AC_SCR2    ACTION_MACRO(SCREEN_2)
 #define AC_SCR3    ACTION_MACRO(SCREEN_3)
@@ -41,7 +42,7 @@ const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS] PROGMEM = {
     TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,     BSLS,     DEL, END, PGDN,    P7,  P8,  P9,  PPLS,
     ESC_L1,A, S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,     NUHS,ENT,                         P4,  P5,  P6,  PCMM,
     LSFT,NUBS,Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,     RO,  RSFT,          UP,           P1,  P2,  P3,  PENT,
-    LCTL,LGUI,LALT,MHEN,          SPC,           HENK,KANA,RALT,F11, F11, F11,      LEFT,DOWN,RGHT,    P0,       PDOT,PEQL
+    LCTL,LGUI,LALT,MHEN,          SPC_L1,        HENK,KANA,RALT,F11, F11, F11,      LEFT,DOWN,RGHT,    P0,       PDOT,PEQL
     ),
     /* space FN layer */
     UNIMAP(
@@ -50,8 +51,8 @@ const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS] PROGMEM = {
     TRNS,F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, TRNS, DEL,     TRNS,TRNS,TRNS,    TRNS,TRNS,TRNS,TRNS,
     SCR1,SCR2,SCR3,SCR4,WH_U,TRNS,VOLU,PGUP,HOME,END, PSCR,SLCK,PAUS,      INS,     TRNS,TRNS,TRNS,    TRNS,TRNS,TRNS,TRNS,
     CAPS,WH_L,BTN2,BTN3,BTN1,WH_R,LEFT,DOWN,UP,  RGHT,BSPC,DEL,      TRNS,TRNS,                        TRNS,TRNS,TRNS,TRNS,
-    TRNS,TRNS,TRNS,TRNS,TRNS,WH_D,TRNS,VOLD,PGDN,DOT, SLSH,CALC,     TRNS,TRNS,          PGUP,         TRNS,TRNS,TRNS,TRNS,
-    TRNS,TRNS,TRNS,TRNS,          TRNS,          TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,     HOME,PGDN,END,     TRNS,     TRNS,TRNS
+    TRNS,TRNS,TRNS,TRNS,TRNS,WH_D,SPC, VOLD,PGDN,TRNS,TRNS,CALC,     TRNS,TRNS,          TRNS,         TRNS,TRNS,TRNS,TRNS,
+    TRNS,TRNS,TRNS,TRNS,          TRNS,          TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,     TRNS,TRNS,TRNS,    TRNS,     TRNS,TRNS
     ),
 };
 
