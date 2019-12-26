@@ -71,19 +71,19 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
     switch (id) {
         case SCREEN_1:
             return (record->event.pressed ?
-                    MACRO( T(NLCK), T(NLCK), T(1), END ) :
+                    MACRO( T(CAPS), T(NLCK), T(NLCK), T(1), T(CAPS), END ) :
                     MACRO_NONE );
         case SCREEN_2:
             return (record->event.pressed ?
-                    MACRO( T(NLCK), T(NLCK), T(2), END ) :
+                    MACRO( T(CAPS), T(NLCK), T(NLCK), T(2), T(CAPS), END ) :
                     MACRO_NONE );
         case SCREEN_3:
             return (record->event.pressed ?
-                    MACRO( T(NLCK), T(NLCK), T(3), END ) :
+                    MACRO( T(CAPS), T(NLCK), T(NLCK), T(3), T(CAPS), END ) :
                     MACRO_NONE );
         case SCREEN_4:
             return (record->event.pressed ?
-                    MACRO( T(NLCK), T(NLCK), T(4), END ) :
+                    MACRO( T(CAPS), T(NLCK), T(NLCK), T(4), T(CAPS), END ) :
                     MACRO_NONE );
     }
     return MACRO_NONE;
