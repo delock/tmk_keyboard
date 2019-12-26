@@ -16,6 +16,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "unimap_trans.h"
 
+enum function_id {
+  ESC_CAPS,
+  SPC_CAPS,
+};
+
 enum macro_id {
   SCREEN_1,
   SCREEN_2,
@@ -23,8 +28,10 @@ enum macro_id {
   SCREEN_4
 };
 
-#define AC_ESC_L1  ACTION_LAYER_TAP_KEY(1, KC_ESC)
-#define AC_SPC_L1  ACTION_LAYER_TAP_KEY(1, KC_SPC)
+//#define AC_ESC_L1  ACTION_LAYER_TAP_KEY(1, KC_ESC)
+//#define AC_SPC_L1  ACTION_LAYER_TAP_KEY(1, KC_SPC)
+#define AC_ESC_L1  ACTION_FUNCTION_TAP(ESC_CAPS)
+#define AC_SPC_L1  ACTION_FUNCTION_TAP(SPC_CAPS)
 #define AC_SCR1    ACTION_MACRO(SCREEN_1)
 #define AC_SCR2    ACTION_MACRO(SCREEN_2)
 #define AC_SCR3    ACTION_MACRO(SCREEN_3)
@@ -49,9 +56,9 @@ const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS] PROGMEM = {
               TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
     TRNS,     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,          TRNS,TRNS,TRNS,         TRNS,TRNS,TRNS,
     TRNS,F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, TRNS, DEL,     TRNS,TRNS,TRNS,    TRNS,TRNS,TRNS,TRNS,
-    SCR1,SCR2,SCR3,SCR4,WH_U,NLCK,VOLU,PGUP,HOME,END, PSCR,SLCK,PAUS,      INS,     TRNS,TRNS,TRNS,    TRNS,TRNS,TRNS,TRNS,
+    SCR4,SCR1,SCR2,SCR3,WH_U,TRNS,PGDN,PGUP,HOME,END, PSCR,SLCK,PAUS,      INS,     TRNS,TRNS,TRNS,    TRNS,TRNS,TRNS,TRNS,
     CAPS,WH_L,BTN2,BTN3,BTN1,WH_R,LEFT,DOWN,UP,  RGHT,BSPC,DEL,      TRNS,TRNS,                        TRNS,TRNS,TRNS,TRNS,
-    TRNS,TRNS,TRNS,TRNS,TRNS,WH_D,SPC, VOLD,PGDN,TRNS,TRNS,CALC,     TRNS,TRNS,          TRNS,         TRNS,TRNS,TRNS,TRNS,
+    TRNS,TRNS,TRNS,TRNS,TRNS,WH_D,SPC, BTN1,PGDN,VOLD,VOLU,CALC,     TRNS,TRNS,          TRNS,         TRNS,TRNS,TRNS,TRNS,
     TRNS,TRNS,TRNS,TRNS,          TRNS,          TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,     TRNS,TRNS,TRNS,    TRNS,     TRNS,TRNS
     ),
 };
@@ -81,3 +88,34 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
     }
     return MACRO_NONE;
 }
+
+
+/*
+ * user defined action function
+ */
+void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
+{
+    switch (id) {
+        case ESC_CAPS:
+        case SPC_CAPS:
+            if (record->event.pressed) {
+                if (record->tap.count > 0 && !record->tap.interrupted) {
+                } else {
+                    register_code(KC_CAPS);
+                    unregister_code(KC_CAPS);
+                    layer_on(1);
+                }
+            } else {
+                if (record->tap.count > 0 && !(record->tap.interrupted)) {
+                    register_code(id==ESC_CAPS?KC_ESC:KC_SPC);
+                    unregister_code(id==ESC_CAPS?KC_ESC:KC_SPC);
+                } else {
+                    register_code(KC_CAPS);
+                    unregister_code(KC_CAPS);
+                    layer_off(1);
+                }
+            }
+            break;
+    }
+}
+
