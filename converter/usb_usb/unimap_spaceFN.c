@@ -28,8 +28,6 @@ enum macro_id {
   SCREEN_4
 };
 
-//#define AC_ESC_L1  ACTION_LAYER_TAP_KEY(1, KC_ESC)
-//#define AC_SPC_L1  ACTION_LAYER_TAP_KEY(1, KC_SPC)
 #define AC_ESC_L1  ACTION_FUNCTION_TAP(ESC_CAPS)
 #define AC_SPC_L1  ACTION_FUNCTION_TAP(SPC_CAPS)
 #define AC_SCR1    ACTION_MACRO(SCREEN_1)
@@ -99,19 +97,32 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
         case ESC_CAPS:
         case SPC_CAPS:
             if (record->event.pressed) {
-                if (record->tap.count > 0 && !record->tap.interrupted) {
+                //if (record->tap.count > 0 && !record->tap.interrupted) {
+                if (record->tap.count > 0) {
+                    if (record->tap.interrupted) {
+                        // sticky when type really really fast
+                        register_code(id==ESC_CAPS?KC_ESC:KC_SPC);
+                        unregister_code(id==ESC_CAPS?KC_ESC:KC_SPC);
+                    }
                 } else {
-                    register_code(KC_CAPS);
-                    unregister_code(KC_CAPS);
                     layer_on(1);
+                    if (id == SPC_CAPS) {
+                        register_code(KC_CAPS);
+                        unregister_code(KC_CAPS);
+                    }
                 }
             } else {
-                if (record->tap.count > 0 && !(record->tap.interrupted)) {
-                    register_code(id==ESC_CAPS?KC_ESC:KC_SPC);
-                    unregister_code(id==ESC_CAPS?KC_ESC:KC_SPC);
+                //if (record->tap.count > 0 && !(record->tap.interrupted)) {
+                if (record->tap.count > 0) {
+                    if (!record->tap.interrupted) {
+                        register_code(id==ESC_CAPS?KC_ESC:KC_SPC);
+                        unregister_code(id==ESC_CAPS?KC_ESC:KC_SPC);
+                    }
                 } else {
-                    register_code(KC_CAPS);
-                    unregister_code(KC_CAPS);
+                    if (id == SPC_CAPS) {
+                        register_code(KC_CAPS);
+                        unregister_code(KC_CAPS);
+                    }
                     layer_off(1);
                 }
             }
