@@ -105,7 +105,7 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
                     }
                 } else {
                     layer_on(1);
-                    if (id == SPC_CAPS) {
+                    if (id == ESC_CAPS) {
                         register_code(KC_CAPS);
                         unregister_code(KC_CAPS);
                     }
@@ -117,7 +117,7 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
                         unregister_code(id==ESC_CAPS?KC_ESC:KC_SPC);
                     }
                 } else {
-                    if (id == SPC_CAPS) {
+                    if (id == ESC_CAPS) {
                         register_code(KC_CAPS);
                         unregister_code(KC_CAPS);
                     }
