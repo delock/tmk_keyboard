@@ -25,7 +25,9 @@ enum macro_id {
   SCREEN_1,
   SCREEN_2,
   SCREEN_3,
-  SCREEN_4
+  SCREEN_4,
+  COMB_COPY,
+  COMB_PASTE,
 };
 
 #define AC_ESC_L1  ACTION_FUNCTION_TAP(ESC_CAPS)
@@ -34,6 +36,8 @@ enum macro_id {
 #define AC_SCR2    ACTION_MACRO(SCREEN_2)
 #define AC_SCR3    ACTION_MACRO(SCREEN_3)
 #define AC_SCR4    ACTION_MACRO(SCREEN_4)
+#define AC_COPY    ACTION_MACRO(COMB_COPY)
+#define AC_P8ST    ACTION_MACRO(COMB_PASTE)
 
 #ifdef KEYMAP_SECTION_ENABLE
 const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS] __attribute__ ((section (".keymap.keymaps"))) = {
@@ -54,9 +58,9 @@ const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS] PROGMEM = {
               TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
     TRNS,     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,          TRNS,TRNS,TRNS,         TRNS,TRNS,TRNS,
     TRNS,F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, TRNS, DEL,     TRNS,TRNS,TRNS,    TRNS,TRNS,TRNS,TRNS,
-    SCR4,SCR1,SCR2,SCR3,WH_U,TRNS,PGDN,PGUP,HOME,END, PSCR,SLCK,PAUS,      INS,     TRNS,TRNS,TRNS,    TRNS,TRNS,TRNS,TRNS,
+    SCR4,SCR1,SCR2,SCR3,WH_U,TRNS,COPY,PGUP,HOME,END, PSCR,SLCK,PAUS,      INS,     TRNS,TRNS,TRNS,    TRNS,TRNS,TRNS,TRNS,
     CAPS,WH_L,BTN2,BTN3,BTN1,WH_R,LEFT,DOWN,UP,  RGHT,BSPC,DEL,      TRNS,TRNS,                        TRNS,TRNS,TRNS,TRNS,
-    TRNS,TRNS,TRNS,TRNS,TRNS,WH_D,SPC, BTN1,PGDN,VOLD,VOLU,CALC,     TRNS,TRNS,          TRNS,         TRNS,TRNS,TRNS,TRNS,
+    TRNS,TRNS,TRNS,TRNS,TRNS,WH_D,SPC, P8ST,PGDN,VOLD,VOLU,CALC,     TRNS,TRNS,          TRNS,         TRNS,TRNS,TRNS,TRNS,
     TRNS,TRNS,TRNS,TRNS,          TRNS,          TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,     TRNS,TRNS,TRNS,    TRNS,     TRNS,TRNS
     ),
 };
@@ -82,6 +86,14 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
         case SCREEN_4:
             return (record->event.pressed ?
                     MACRO( T(NLCK), T(NLCK), T(4), END ) :
+                    MACRO_NONE );
+        case COMB_COPY:
+            return (record->event.pressed ?
+                    MACRO( D(LCTL), T(C), U(LCTL), END ) :
+                    MACRO_NONE );
+        case COMB_PASTE:
+            return (record->event.pressed ?
+                    MACRO( D(LCTL), T(V), U(LCTL), END ) :
                     MACRO_NONE );
     }
     return MACRO_NONE;
