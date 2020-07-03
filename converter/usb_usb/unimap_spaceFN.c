@@ -29,6 +29,7 @@ enum macro_id {
   COMB_CUT,
   COMB_COPY,
   COMB_PASTE,
+  COMB_UNDO,
 };
 
 #define AC_ESC_L1  ACTION_FUNCTION_TAP(ESC_CAPS)
@@ -40,6 +41,7 @@ enum macro_id {
 #define AC_COPY    ACTION_MACRO(COMB_COPY)
 #define AC_P8ST    ACTION_MACRO(COMB_PASTE)
 #define AC_XCUT    ACTION_MACRO(COMB_CUT)
+#define AC_UNDO    ACTION_MACRO(COMB_UNDO)
 
 #ifdef KEYMAP_SECTION_ENABLE
 const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS] __attribute__ ((section (".keymap.keymaps"))) = {
@@ -62,7 +64,7 @@ const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS] PROGMEM = {
     TRNS,F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, TRNS, DEL,     TRNS,TRNS,TRNS,    TRNS,TRNS,TRNS,TRNS,
     SCR4,SCR1,SCR2,SCR3,WH_U,TRNS,COPY,PGUP,HOME,END, P8ST,SLCK,PAUS,      INS,     TRNS,TRNS,TRNS,    TRNS,TRNS,TRNS,TRNS,
     CAPS,WH_L,BTN2,BTN3,BTN1,WH_R,LEFT,DOWN,UP,  RGHT,BSPC,DEL,      TRNS,TRNS,                        TRNS,TRNS,TRNS,TRNS,
-    TRNS,TRNS,TRNS,TRNS,TRNS,WH_D,SPC, P8ST,PGDN,VOLD,VOLU,CALC,     TRNS,TRNS,          TRNS,         TRNS,TRNS,TRNS,TRNS,
+    TRNS,TRNS,UNDO,XCUT,TRNS,WH_D,SPC, P8ST,PGDN,VOLD,VOLU,CALC,     TRNS,TRNS,          TRNS,         TRNS,TRNS,TRNS,TRNS,
     TRNS,TRNS,TRNS,TRNS,          TRNS,          TRNS,TRNS,TRNS,TRNS,TRNS,PSCR,     TRNS,TRNS,TRNS,    TRNS,     TRNS,TRNS
     ),
 };
@@ -93,9 +95,17 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
             return (record->event.pressed ?
                     MACRO( D(LCTL), T(C), U(LCTL), END ) :
                     MACRO_NONE );
+        case COMB_CUT:
+            return (record->event.pressed ?
+                    MACRO( D(LCTL), T(X), U(LCTL), END ) :
+                    MACRO_NONE );
         case COMB_PASTE:
             return (record->event.pressed ?
                     MACRO( D(LCTL), T(V), U(LCTL), END ) :
+                    MACRO_NONE );
+        case COMB_UNDO:
+            return (record->event.pressed ?
+                    MACRO( D(LCTL), T(Z), U(LCTL), END ) :
                     MACRO_NONE );
     }
     return MACRO_NONE;
